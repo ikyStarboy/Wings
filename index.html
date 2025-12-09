@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ZedxPlay Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #000000; /* Hitam Pekat */
+            --card-bg: rgba(20, 20, 20, 0.6);
+            --card-border: rgba(0, 255, 255, 0.1); /* Cyan tipis */
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --glow-color: #00f2fe; /* Cyan Neon */
+            --glow-secondary: #4facfe; /* Biru Neon */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            /* Background Grid Halus ala Tech */
+            background-image: 
+                linear-gradient(rgba(0, 242, 254, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 242, 254, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        /* Efek Vignette di pinggir layar */
+        body::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, transparent 40%, #000000 100%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            min-height: 100vh;
+            padding: 3rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* --- HEADER TYPOGRAPHY (ZedxPlay) --- */
+        .brand-header {
+            text-align: center;
+            margin-bottom: 1rem;
+            margin-top: 1rem;
+            position: relative;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif; /* Font Sci-Fi */
+            font-size: 2.8rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #fff;
+            /* Text Shadow untuk efek Neon Glow */
+            text-shadow: 
+                0 0 10px var(--glow-color),
+                0 0 20px var(--glow-color),
+                0 0 40px var(--glow-secondary);
+            animation: flicker 3s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0%, 18%, 22%, 25%, 53%, 57%, 100% {
+                text-shadow: 
+                0 0 10px var(--glow-color),
+                0 0 20px var(--glow-color),
+                0 0 40px var(--glow-secondary);
+                opacity: 1;
+            }
+            20%, 24%, 55% {
+                text-shadow: none;
+                opacity: 0.8;
+            }
+        }
+
+        .subtitle {
+            font-size: 0.8rem;
+            color: var(--glow-color);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-top: -5px;
+            opacity: 0.8;
+        }
+
+        /* --- CARDS & LAYOUT --- */
+        .section-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Garis kilau berjalan di atas card */
+        .section-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--glow-color), transparent);
+            animation: scanline 4s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% { left: -100%; }
+            50%, 100% { left: 100%; }
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 10px;
+        }
+
+        .section-title i {
+            color: var(--glow-color);
+        }
+
+        /* --- BUTTONS --- */
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn-tech {
+            position: relative;
+            background: rgba(255, 255, 255, 0.03);
+            color: white;
+            padding: 18px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-left: 3px solid transparent;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        /* Hover Effect: Border Kiri & Background Glow */
+        .btn-tech:hover {
+            background: rgba(0, 242, 254, 0.05);
+            border-left: 3px solid var(--glow-color);
+            transform: translateX(5px);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.1);
+        }
+
+        .btn-tech .content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn-tech .icon-box {
+            width: 35px;
+            height: 35px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--glow-color);
+            font-size: 1.1rem;
+        }
+
+        .btn-tech .text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .btn-tech .main-text {
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-tech .sub-text {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .action-icon {
+            color: var(--text-muted);
+            transition: 0.3s;
+        }
+
+        .btn-tech:hover .action-icon {
+            color: var(--glow-color);
+            transform: scale(1.2);
+        }
+
+        /* Tombol Spesial (Download) */
+        .btn-special {
+            background: linear-gradient(90deg, rgba(0, 242, 254, 0.1), transparent);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            margin-top: auto;
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            opacity: 0.6;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="brand-header">
+            <h1>ZEDXPLAY</h1>
+            <div class="subtitle">WELCOME TO ZEDXWEB</div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-title">
+                <i class="fa-solid fa-folder-tree"></i> RESOURCES
+            </div>
+            <div class="btn-group">
+                <a href="#" class="btn-tech">
+                    <div class="content">
+                        <div class="icon-box"><i class="fa-solid fa-book"></i></div>
+                        <div class="text">
+                            <span class="main-text">Dokumentasi</span>
+                            <span class="sub-text">Panduan instalasi lengkap</span>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right action-icon"></i>
+                </a>
+                
+                <a href="#" class="btn-tech">
+                    <div class="content">
+                        <div class="icon-box"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div class="text">
+                            <span class="main-text">Kebijakan Privasi</span>
+                            <span class="sub-text">Ketentuan penggunaan</span>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right action-icon"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-title">
+                <i class="fa-solid fa-download"></i> DOWNLOAD CENTER
+            </div>
+            <div class="btn-group">
+                <a href="https://www.mediafire.com/file/m6k35eyf7vgmvwh/ZedxPlay_1.0.apk/file?dkey=0w82ehq9bo3&r=659" class="btn-tech btn-special">
+                    <div class="content">
+                        <div class="icon-box"><i class="fa-brands fa-android"></i></div>
+                        <div class="text">
+                            <span class="main-text">ZedxPlay Android</span>
+                            <span class="sub-text">Versi Terbaru v1.0 (Beta)</span>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-cloud-arrow-down action-icon"></i>
+                </a>
+
+                <a href="#" class="btn-tech">
+                    <div class="content">
+                        <div class="icon-box"><i class="fa-solid fa-desktop"></i></div>
+                        <div class="text">
+                            <span class="main-text">Versi Desktop</span>
+                            <span class="sub-text">Untuk Windows & Mac</span>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right action-icon"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-title">
+                <i class="fa-solid fa-circle-info"></i> TENTANG KAMI
+            </div>
+            <div style="font-size: 0.9rem; color: #aaa; line-height: 1.6; margin-bottom: 15px;">
+                ZedxPlay adalah platform app untuk menonton segala jenis anime dan donghua app ini masi dalam perkembangan developer jadi mohon bersabar ya.
+            </div>
+            <a href="#" class="btn-tech" style="justify-content: center; background: rgba(255,255,255,0.05);">
+                <span style="color: var(--text-main); font-weight: 600;">Hubungi Developer</span>
+            </a>
+        </div>
+
+        <footer>
+            &copy; 2024 ZedxPlay Development.<br>All Systems Operational.
+        </footer>
+
+    </div>
+
+</body>
+</html>
